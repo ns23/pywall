@@ -37,14 +37,14 @@ def select_image(image_dict):
 
 
 def download_image(url, name="defautlt.jpeg"):
-    """
-    @todo : check if image already exists in the folder
-    """
+    img_path = os.path.join(os.getcwd(),'images', name)
+    print(img_path)
     try:
-        with open(name, "wb") as file:
-            resp = get(url)
-            file.write(resp.content)
-            pass
+        if not util.check_file_exits(img_path):
+            with open(img_path, "wb") as file:
+                resp = get(url)
+                file.write(resp.content)
+                pass
         return True
     except:
         print("Unexpected error:", sys.exc_info()[0])
@@ -64,3 +64,7 @@ def set_wallpaper(pic_path):
     else:
         print('OS not supported.')
         return
+
+
+def create_download_dir():
+    util.create_folder(os.path.join(os.getcwd(), 'images'))

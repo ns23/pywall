@@ -1,9 +1,10 @@
 from lib import pywallib
-from os import getcwd
+from os import getcwd, path
 from time import sleep
 
 
 def main(run_forever=True):
+    pywallib.create_download_dir()
     while run_forever:
         image_dict = pywallib.get_images()
         selected_image = pywallib.select_image(image_dict)
@@ -12,11 +13,12 @@ def main(run_forever=True):
             selected_image['largeImageURL'], name=img_name)
 
         if download_img:
-            pywallib.set_wallpaper('{}/{}'.format(getcwd(), img_name))
+            pywallib.set_wallpaper('{}'.format(
+                path.join(getcwd(), 'images', img_name)))
         else:
             print('Was not able to download the image,Please try again')
-        
-        sleep(900)    
+
+        sleep(3600)
 
 
 main()
